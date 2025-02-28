@@ -1,0 +1,41 @@
+{% extends "hxformset/base.html" %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+    <main class="container">
+        <h1>Todos</h1>
+
+        <form method="post" action=".">
+            <div id="formset_container" hx-swap-oob="true">
+                {% csrf_token %}
+                {{ formset.management_form }}
+
+                {% for form in formset %}
+                    {{ form.errors }}
+                    {{ form.id }}
+                    <fieldset class="grid">
+                        {% if form.instance.pk %}
+                            <label>{{ form.is_done|attr:"hx-post:."|attr:"hx-swap:none" }} Done {{ form.done.value|default:"" }}</label>
+                            {{ form.description }}
+                            <div>
+                                <a href="." {% comment %}name="{{ form.DELETE.html_name }}" value="on"{% endcomment %}
+                                        hx-post="." hx-swap="none"
+                                        hx-vals='{"{{ form.DELETE.html_name }}": "on"}'
+                                >Delete</a>
+                            </div>
+                            
+                        {% else %}
+                            <div></div>
+                            <fieldset role="group">
+                                {{ form.description|attr:"autofocus:autofocus"|attr:"placeholder:New Todo Item" }}
+                                <input type="submit" hx-post="." hx-swap="none" value="Create"/>
+                            </fieldset>
+                            <div></div>
+                        {% endif  %}
+                    </fieldset>
+                {% endfor %}
+            </div>
+        </form>
+    </main>
+{% endblock %}
