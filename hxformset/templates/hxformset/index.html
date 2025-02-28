@@ -19,12 +19,9 @@
                             <label>{{ form.is_done|attr:"hx-post:."|attr:"hx-swap:none" }} Done {{ form.done.value|default:"" }}</label>
                             {{ form.description }}
                             <div>
-                                <a href="." {% comment %}name="{{ form.DELETE.html_name }}" value="on"{% endcomment %}
-                                        hx-post="." hx-swap="none"
-                                        hx-vals='{"{{ form.DELETE.html_name }}": "on"}'
+                                <a href="." hx-post="." hx-swap="none" hx-vals='{"{{ form.DELETE.html_name }}": "on"}'
                                 >Delete</a>
                             </div>
-                            
                         {% else %}
                             <div></div>
                             <fieldset role="group">
